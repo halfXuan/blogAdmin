@@ -1,8 +1,18 @@
+/*
+ * @Author: 471826078@qq.com
+ * @Date: 2020-05-21 09:50:47
+ * @LastEditors: 471826078@qq.com
+ * @LastEditTime: 2020-05-21 11:56:08
+ */ 
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+import '@/assets/css/reset.css'
 
+Vue.use(ElementUI)
 Vue.config.productionTip = false
 
 new Vue({

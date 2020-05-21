@@ -1,10 +1,12 @@
+<!--
+ * @Author: 471826078@qq.com
+ * @Date: 2020-05-21 09:50:47
+ * @LastEditors: 471826078@qq.com
+ * @LastEditTime: 2020-05-21 13:57:06
+--> 
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
@@ -15,6 +17,10 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
 }
 
 #nav {
