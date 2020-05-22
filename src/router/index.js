@@ -2,7 +2,7 @@
  * @Author: 471826078@qq.com
  * @Date: 2020-05-21 09:50:47
  * @LastEditors: 471826078@qq.com
- * @LastEditTime: 2020-05-21 11:39:18
+ * @LastEditTime: 2020-05-21 18:09:39
  */ 
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -18,7 +18,14 @@ Vue.use(VueRouter)
   {
     path: '/Home',
     name: 'Home',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue'),
+    children:[
+      {
+        path: 'AddAcrticle',
+        name: 'AddAcrticle',
+        component: () => import(/* webpackChunkName: "about" */ '../views/article/add.vue')
+      },
+    ]
   },
   {
     path: '/Login',
