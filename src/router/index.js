@@ -21,9 +21,29 @@ Vue.use(VueRouter)
     component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue'),
     children:[
       {
-        path: 'AddAcrticle',
+        path: '/Home/Board',
+        name: 'Board',
+        component: () => import(/* webpackChunkName: "about" */ '../views/board.vue')
+      },
+      {
+        path: '/Home/User',
+        name: 'User',
+        component: () => import(/* webpackChunkName: "about" */ '../views/User.vue')
+      },
+      {
+        path: '/Home/Comment',
+        name: 'Comment',
+        component: () => import(/* webpackChunkName: "about" */ '../views/Comment.vue')
+      },
+      {
+        path: '/Home/AddAcrticle',
         name: 'AddAcrticle',
         component: () => import(/* webpackChunkName: "about" */ '../views/article/add.vue')
+      },
+      {
+        path: '/Home/AcrticleList',
+        name: 'AddAcrticle',
+        component: () => import(/* webpackChunkName: "about" */ '../views/article/List.vue')
       },
     ]
   },
