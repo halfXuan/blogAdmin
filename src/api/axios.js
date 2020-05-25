@@ -2,15 +2,15 @@
  * @Author: 471826078@qq.com
  * @Date: 2020-05-21 09:54:50
  * @LastEditors: 471826078@qq.com
- * @LastEditTime: 2020-05-21 10:27:23
+ * @LastEditTime: 2020-05-25 18:19:12
  */
 import axios from 'axios'
-import Qs from 'qs'
-import Vue from 'vue'
+// import Qs from 'qs'
+// import Vue from 'vue'
 import router from '../router'
 
 axios.defaults.timeout = 10000
-axios.defaults.headers.post['Content-type'] = 'application/x-www-form-urlencoded'
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 //请求拦截
 axios.interceptors.request.use(
     config => {
@@ -113,7 +113,7 @@ export const get = (url, params) => {
 
 export const post = (url, params) => {
     return new Promise((resolve, reject) => {
-        axios.post(url, Qs.stringify(params, { allowDots: true })).then(res => {
+        axios.post(url, params).then(res => {
             resolve(res.data)
         }).catch(err => {
             reject(err.data)
