@@ -2,17 +2,17 @@
  * @Author: 471826078@qq.com
  * @Date: 2020-05-21 10:31:40
  * @LastEditors: 471826078@qq.com
- * @LastEditTime: 2020-05-21 11:49:20
+ * @LastEditTime: 2020-05-26 15:03:04
 --> 
 <template>
   <div class="login">
     <div class="loginBox">
       <el-form :model="form" :rules="rules" ref="ruleForm">
-          <el-form-item>
-              <p style="font-size:20px;">后台管理系统</p>
-          </el-form-item>
-        <el-form-item prop="account">
-          <el-input placeholder="请输入账号" v-model="form.account">
+        <el-form-item>
+          <p style="font-size:20px;">后台管理系统</p>
+        </el-form-item>
+        <el-form-item prop="phone">
+          <el-input placeholder="请输入手机号" v-model="form.phone">
             <i slot="prefix" class="el-input__icon el-icon-user"></i>
           </el-input>
         </el-form-item>
@@ -43,6 +43,7 @@
   </div>
 </template>
 <script>
+import { apiLogin } from "@/api/login";
 export default {
   name: "Login",
   data() {
@@ -50,11 +51,11 @@ export default {
       showPwd: false,
       checked: false,
       form: {
-        account: "",
+        phone: "",
         password: ""
       },
       rules: {
-        account: [
+        phone: [
           { required: true, message: "请输入用户名称", trigger: "blur" },
           { min: 3, max: 15, message: "长度在 3 到 15 个字符", trigger: "blur" }
         ],
@@ -62,46 +63,65 @@ export default {
       }
     };
   },
-  methods:{
-      submit(formName){
-           this.$refs[formName].validate((valid) => {
-          if (valid) {
-            this.$message('submit!');
-            this.$router.replace('Home')
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-      },
-      toRegister(){
-          this.$router.replace('Register')
-      }
+  methods: {
+    submit(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          const { phone, password } = this.form;
+          apiLogin({ phone, password }).then(res => {
+               console.log(res);
+            if (res.isSuccess) {
+           
+
+              this.$message({
+                type: "success",
+                message: res.message
+              });
+              setTimeout(() => {
+                this.$message("submit!");
+                this.$router.replace("Home");
+              }, 1000);
+            } else {
+              this.$message({
+                type: "error",
+                message: res.message
+              });
+            }
+          });
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    toRegister() {
+      this.$router.replace("Register");
+    }
   }
 };
 </script>
 <style lang="less" scoped>
-.login{
-    position: relative;
-    width: 100%;
-    height: 100%;
-    &Box{
-        position: fixed;
-        width: 400px;
-        border: 1px solid #ccc;
-        padding: 30px;
-        border-radius: 5px;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%,-50%);
-        &Save{
-            display: flex;
-            justify-content: space-between;
-        }
-        &Btn{
-             width: 100%;
-        }
+.login {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  &Box {
+    position: fixed;
+    width: 400px;
+    border: 1px solid #ccc;
+    padding: 30px;
+    border-radius: 5px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    &Save {
+      display: flex;
+      justify-content: space-between;
     }
+    &Btn {
+      width: 100%;
+    }
+  }
 }
 </style>
 <style>

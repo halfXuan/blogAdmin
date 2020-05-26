@@ -2,7 +2,7 @@
  * @Author: 471826078@qq.com
  * @Date: 2020-05-21 11:35:12
  * @LastEditors: 471826078@qq.com
- * @LastEditTime: 2020-05-25 18:19:00
+ * @LastEditTime: 2020-05-26 14:43:00
 --> 
 <template>
   <div class="register">
@@ -86,7 +86,18 @@ export default {
         if (valid) {
           const { name, email, phone, password } = this.form;
           apiRegister({name, email, phone, password}).then(res => {
-            console.log(res);
+            if(res.isSuccess){
+              this.$message({
+                type:'success',
+                message: res.message
+              })
+               this.$router.replace("Login");
+            }else {
+               this.$message({
+                type:'error',
+                message: res.message
+              })
+            }
           });
           // axios.post('api/users/register',{name, email, phone, password}).then(res=>{
           //   console.log(res);
