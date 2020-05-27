@@ -2,11 +2,13 @@
  * @Author: 471826078@qq.com
  * @Date: 2020-05-21 09:54:50
  * @LastEditors: 471826078@qq.com
- * @LastEditTime: 2020-05-25 18:19:12
+ * @LastEditTime: 2020-05-27 16:18:41
  */
 import axios from 'axios'
-// import Qs from 'qs'
-// import Vue from 'vue'
+//引入vue
+import Vue from 'vue';
+//新创建一个vue实例
+let v = new Vue();
 import router from '../router'
 
 axios.defaults.timeout = 10000
@@ -33,6 +35,8 @@ axios.interceptors.response.use(
     },
     error => {
         if (error.response.status) {
+            console.log(error);
+            
             switch (error.response.status) {
                 case 401:
                     router.replace({
@@ -41,12 +45,10 @@ axios.interceptors.response.use(
                     })
                     break;
                 case 403:
-                    // Toast({
-                    //     message: '登录过期，请重新登录',
-                    //     duration: 1000,
-                    //     forbidClick: true
-                    // });
-                    // 清除token
+                    v.$message({
+                        type:'warning',
+                        message:'token已过期，请重新登录'
+                    })
                     localStorage.removeItem('blogToken');
                     // store.commit('loginSuccess', null);
                     // 跳转登录页面，并将要浏览的页面fullPath传过去，登录成功后跳转需要访问的页面
@@ -57,7 +59,7 @@ axios.interceptors.response.use(
                                 redirect: router.currentRoute.fullPath
                             }
                         });
-                    }, 1000);
+                    }, 2000);
                     break;
                 case 404:
                     // Toast({

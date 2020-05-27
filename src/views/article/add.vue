@@ -2,10 +2,15 @@
  * @Author: 471826078@qq.com
  * @Date: 2020-05-21 18:06:03
  * @LastEditors: 471826078@qq.com
- * @LastEditTime: 2020-05-21 18:09:13
+ * @LastEditTime: 2020-05-27 17:53:10
 --> 
 <template>
      <div>
+         <el-row>
+             <el-col>
+                 
+             </el-col>
+         </el-row>
         <mavon-editor 
             v-model="content" 
             ref="md" 
@@ -34,6 +39,8 @@ export default {
         change(value, render){
             // render 为 markdown 解析后的结果[html]
             this.html = render;
+            console.log(value);
+            
         },
         // 提交
         submit(){

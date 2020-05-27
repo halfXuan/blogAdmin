@@ -2,7 +2,7 @@
  * @Author: 471826078@qq.com
  * @Date: 2020-05-21 09:50:47
  * @LastEditors: 471826078@qq.com
- * @LastEditTime: 2020-05-21 17:50:45
+ * @LastEditTime: 2020-05-27 17:41:35
 --> 
 <template>
   <el-container class="home">
@@ -34,9 +34,18 @@
             <span slot="title">导航四</span>
           </el-menu-item>
           <el-submenu index="5">
-            <template slot="title">文章管理</template>
-            <el-menu-item index="/Home/AddAcrticle">添加文章</el-menu-item>
-            <el-menu-item index="/Home/AcrticleList">文章列表</el-menu-item>
+            <template slot="title">
+              <i class="el-icon-setting"></i>
+              <span slot="title">文章管理</span>
+            </template>
+            <el-menu-item index="/Home/AddAcrticle">
+              <i class="el-icon-setting"></i>
+              <span slot="title">添加文章</span>
+            </el-menu-item>
+            <el-menu-item index="/Home/AcrticleList">
+              <i class="el-icon-setting"></i>
+              <span slot="title">文章列表</span>
+            </el-menu-item>
           </el-submenu>
         </el-menu>
         <el-link type="primary" @click="isCollapse=!isCollapse" style="width:60px;height:40px">
@@ -70,7 +79,7 @@ export default {
   name: "Home",
   data() {
     return {
-      isCollapse: false,
+      isCollapse: false
     };
   },
   methods: {
@@ -78,10 +87,13 @@ export default {
     handleClose() {},
     handleSelect(index, indexPath) {
       console.log(indexPath);
-      
-      this.$store.commit('setStore',['defaultActive',indexPath[indexPath.length-1]])
-      if(indexPath[indexPath.length-1].indexOf('/')!==-1){
-        this.$router.replace(indexPath[indexPath.length-1])
+
+      this.$store.commit("setStore", [
+        "defaultActive",
+        indexPath[indexPath.length - 1]
+      ]);
+      if (indexPath[indexPath.length - 1].indexOf("/") !== -1) {
+        this.$router.replace(indexPath[indexPath.length - 1]);
       }
     }
   },

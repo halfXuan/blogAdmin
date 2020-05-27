@@ -2,7 +2,7 @@
  * @Author: 471826078@qq.com
  * @Date: 2020-05-21 10:31:40
  * @LastEditors: 471826078@qq.com
- * @LastEditTime: 2020-05-26 15:03:04
+ * @LastEditTime: 2020-05-27 14:43:47
 --> 
 <template>
   <div class="login">
@@ -72,7 +72,7 @@ export default {
                console.log(res);
             if (res.isSuccess) {
            
-
+              window.localStorage.setItem('blogToken',res.token)
               this.$message({
                 type: "success",
                 message: res.message
