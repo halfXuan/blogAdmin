@@ -2,7 +2,7 @@
  * @Author: 471826078@qq.com
  * @Date: 2020-05-21 09:50:47
  * @LastEditors: 471826078@qq.com
- * @LastEditTime: 2020-05-27 17:41:35
+ * @LastEditTime: 2020-05-29 10:20:22
 --> 
 <template>
   <el-container class="home">
@@ -29,7 +29,7 @@
             <i class="el-icon-document"></i>
             <span slot="title">评论管理</span>
           </el-menu-item>
-          <el-menu-item index="4">
+          <el-menu-item index="/Home/Label">
             <i class="el-icon-setting"></i>
             <span slot="title">导航四</span>
           </el-menu-item>
@@ -45,6 +45,10 @@
             <el-menu-item index="/Home/AcrticleList">
               <i class="el-icon-setting"></i>
               <span slot="title">文章列表</span>
+            </el-menu-item>
+            <el-menu-item index="/Home/Label">
+              <i class="el-icon-setting"></i>
+              <span slot="title">文章标签</span>
             </el-menu-item>
           </el-submenu>
         </el-menu>

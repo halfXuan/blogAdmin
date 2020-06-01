@@ -2,7 +2,7 @@
  * @Author: 471826078@qq.com
  * @Date: 2020-05-21 09:50:47
  * @LastEditors: 471826078@qq.com
- * @LastEditTime: 2020-05-21 18:09:39
+ * @LastEditTime: 2020-05-29 10:19:14
  */ 
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -29,6 +29,11 @@ Vue.use(VueRouter)
         path: '/Home/User',
         name: 'User',
         component: () => import(/* webpackChunkName: "about" */ '../views/User.vue')
+      },
+      {
+        path: '/Home/Label',
+        name: 'User',
+        component: () => import(/* webpackChunkName: "about" */ '../views/Label')
       },
       {
         path: '/Home/Comment',
