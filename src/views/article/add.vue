@@ -9,9 +9,9 @@
     <el-row style="margin-bottom:22px">
       <el-col :span="24" class="artItem">
         <span class="artItemTitle">文章标题：</span>
-        <el-input v-model="name"></el-input>
+        <el-Input v-model="name"></el-Input>
       </el-col>
-      <el-row>
+     
         <el-col :span="16">
           <el-col :span="24" class="artItem">
             <span class="artItemTitle">标签：</span>
@@ -54,7 +54,7 @@
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-col>
-      </el-row>
+     
     </el-row>
     <mavon-editor
       v-model="content"
@@ -72,6 +72,7 @@
 <script>
 import axios from "axios";
 import { apiQueryLabel } from "@/api/label";
+import { apiAddArticle } from '@/api/article'
 import { mavonEditor } from "mavon-editor";
 import "mavon-editor/dist/css/index.css";
 export default {
@@ -109,12 +110,61 @@ export default {
     change(value, render) {
       // render 为 markdown 解析后的结果[html]
       this.html = render;
+      console.log(this.html);
+
       console.log(value);
     },
     // 提交
     submit() {
       console.log(this.TagList);
       console.log(this.html);
+      const params = {};
+      if (this.name) {
+        params.name = this.name;
+      } else {
+        this.$message({
+          type: "warning",
+          message: "文章标题不能为空"
+        });
+        return false;
+      }
+      if (this.labels.length) {
+        params.labels = this.labels;
+      } else {
+        this.$message({
+          type: "warning",
+          message: "请至少选择一个标签"
+        });
+        return false;
+      }
+      if (this.content) {
+        params.content = this.content;
+      } else {
+        this.$message({
+          type: "warning",
+          message: "文章内容不能为空"
+        });
+        return false;
+      }
+      if (this.imgUrl) {
+        params.imgUrl = this.imgUrl;
+      } else {
+        this.$message({
+          type: "warning",
+          message: "文章配图不能为空"
+        });
+        return false;
+      }
+      params.isAuthor = this.isAuthor;
+      params.isTop = this.isTop;
+      params.isPublish = this.isPublish;
+      params.imgUrl = this.imgUrl;
+      params.htmlContent = this.html;
+
+apiAddArticle(params).then((res)=>{
+  console.log(res);
+  
+})
     },
     handleAvatarSuccess() {},
     beforeAvatarUpload() {},
@@ -157,8 +207,8 @@ export default {
         data: formdata,
         headers: { "Content-Type": "multipart/form-data" }
       }).then(res => {
-          console.log(res);
-          
+        console.log(res);
+
         let _res = res.data;
         // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)
         this.$refs.md.$img2Url(pos, _res.path);
