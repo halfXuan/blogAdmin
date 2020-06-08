@@ -2,7 +2,7 @@
  * @Author: 471826078@qq.com
  * @Date: 2020-05-21 18:06:03
  * @LastEditors: 471826078@qq.com
- * @LastEditTime: 2020-06-05 17:42:47
+ * @LastEditTime: 2020-06-08 17:34:40
 --> 
 <template>
   <div>
@@ -135,7 +135,7 @@ export default {
         .post("api/index/uploadImage", params, config)
         .then(res => {
           if (res.data.code === 1) {
-            this.imgUrl = "http://127.0.0.1:3000/" + res.data.path;
+            this.imgUrl =  res.data.path;
             this.$message.success("上传成功");
           } else {
             this.$message.error(res.data.retmsg);
