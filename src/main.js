@@ -2,7 +2,7 @@
  * @Author: 471826078@qq.com
  * @Date: 2020-05-21 09:50:47
  * @LastEditors: 471826078@qq.com
- * @LastEditTime: 2020-05-21 11:56:08
+ * @LastEditTime: 2020-06-11 14:15:58
  */ 
 import Vue from 'vue'
 import App from './App.vue'
@@ -14,7 +14,7 @@ import '@/assets/css/reset.css'
 
 Vue.use(ElementUI)
 Vue.config.productionTip = false
-
+//
 new Vue({
   router,
   store,
