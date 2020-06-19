@@ -15,16 +15,16 @@ axios.defaults.timeout = 10000
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 //请求拦截
 axios.interceptors.request.use(
-    config => {
-        const token = window.localStorage.getItem('blogToken')
-        token && (config.headers.Authorization = token);
-        return config
-    },
-    error => {
-        return Promise.error(error)
-    }
-)
-//响应拦截
+        config => {
+            const token = window.localStorage.getItem('blogToken')
+            token && (config.headers.Authorization = token);
+            return config
+        },
+        error => {
+            return Promise.error(error)
+        }
+    )
+    //响应拦截
 axios.interceptors.response.use(
     response => {
         if (response.status === 200) {
@@ -36,18 +36,22 @@ axios.interceptors.response.use(
     error => {
         if (error.response.status) {
             console.log(error);
-            
+
             switch (error.response.status) {
                 case 401:
                     router.replace({
                         path: '/login',
                         query: { redirect: router.currentRoute.fullPath }
                     })
+                    v.$message({
+                        type: 'warning',
+                        message: error.response.data
+                    })
                     break;
                 case 403:
                     v.$message({
-                        type:'warning',
-                        message:'token已过期，请重新登录'
+                        type: 'warning',
+                        message: 'token已过期，请重新登录'
                     })
                     localStorage.removeItem('blogToken');
                     // store.commit('loginSuccess', null);
@@ -62,26 +66,23 @@ axios.interceptors.response.use(
                     }, 2000);
                     break;
                 case 404:
-                    // Toast({
-                    //     message: '网络请求不存在',
-                    //     duration: 1500,
-                    //     forbidClick: true
-                    // })
+                    v.$message({
+                        type: 'warning',
+                        message: '网络请求不存在'
+                    })
                     break;
                 case 500:
-                    // Toast({
-                    //     message: '服务异常，请联系管理员',
-                    //     duration: 1500,
-                    //     forbidClick: true
-                    // });
+                    v.$message({
+                        type: 'warning',
+                        message: '服务器异常，请联系管理员'
+                    })
                     break;
-                // 其他错误，直接抛出错误提示
+                    // 其他错误，直接抛出错误提示
                 default:
-                // Toast({
-                //     message: error.response.data.message,
-                //     duration: 1500,
-                //     forbidClick: true
-                // });
+                    v.$message({
+                        type: 'warning',
+                        message: error.response.data
+                    })
             }
             return Promise.reject(error.response);
 
