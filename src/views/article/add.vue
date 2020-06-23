@@ -11,50 +11,49 @@
         <span class="artItemTitle">文章标题：</span>
         <el-Input v-model="name"></el-Input>
       </el-col>
-     
-        <el-col :span="16">
-          <el-col :span="24" class="artItem">
-            <span class="artItemTitle">标签：</span>
-            <el-checkbox-group v-model="labels">
-              <el-checkbox :label="item.name" v-for="(item,index) in labelList" :key="index"></el-checkbox>
-            </el-checkbox-group>
-          </el-col>
-          <el-col :span="12" class="artItem">
-            <span class="artItemTitle">是否原创：</span>
-            <el-radio-group v-model="isAuthor">
-              <el-radio :label="1">是</el-radio>
-              <el-radio :label="0">否</el-radio>
-            </el-radio-group>
-          </el-col>
-          <el-col :span="12" class="artItem">
-            <span class="artItemTitle">是否置顶：</span>
-            <el-radio-group v-model="isTop">
-              <el-radio :label="1">是</el-radio>
-              <el-radio :label="0">否</el-radio>
-            </el-radio-group>
-          </el-col>
-          <el-col :span="12" class="artItem">
-            <span class="artItemTitle">直接上架：</span>
-            <el-radio-group v-model="isPublish">
-              <el-radio :label="1">是</el-radio>
-              <el-radio :label="0">否</el-radio>
-            </el-radio-group>
-          </el-col>
+
+      <el-col :span="16">
+        <el-col :span="24" class="artItem">
+          <span class="artItemTitle">标签：</span>
+          <el-checkbox-group v-model="labels">
+            <el-checkbox :label="item.name" v-for="(item,index) in labelList" :key="index"></el-checkbox>
+          </el-checkbox-group>
         </el-col>
-        <el-col :span="8">
-          <el-upload
-            class="avatar-uploader"
-            action="/"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload"
-            :http-request="uploadFile"
-          >
-            <img v-if="imgUrl" :src="imgUrl" class="avatar" />
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          </el-upload>
+        <el-col :span="12" class="artItem">
+          <span class="artItemTitle">是否原创：</span>
+          <el-radio-group v-model="isAuthor">
+            <el-radio :label="1">是</el-radio>
+            <el-radio :label="0">否</el-radio>
+          </el-radio-group>
         </el-col>
-     
+        <el-col :span="12" class="artItem">
+          <span class="artItemTitle">是否置顶：</span>
+          <el-radio-group v-model="isTop">
+            <el-radio :label="1">是</el-radio>
+            <el-radio :label="0">否</el-radio>
+          </el-radio-group>
+        </el-col>
+        <el-col :span="12" class="artItem">
+          <span class="artItemTitle">直接上架：</span>
+          <el-radio-group v-model="isPublish">
+            <el-radio :label="1">是</el-radio>
+            <el-radio :label="0">否</el-radio>
+          </el-radio-group>
+        </el-col>
+      </el-col>
+      <el-col :span="8">
+        <el-upload
+          class="avatar-uploader"
+          action="/"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload"
+          :http-request="uploadFile"
+        >
+          <img v-if="imgUrl" :src="imgUrl" class="avatar" />
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+      </el-col>
     </el-row>
     <mavon-editor
       v-model="content"
@@ -72,7 +71,7 @@
 <script>
 import axios from "axios";
 import { apiQueryLabel } from "@/api/label";
-import { apiAddArticle } from '@/api/article'
+import { apiAddArticle } from "@/api/article";
 import { mavonEditor } from "mavon-editor";
 import "mavon-editor/dist/css/index.css";
 export default {
@@ -161,10 +160,22 @@ export default {
       params.imgUrl = this.imgUrl;
       params.htmlContent = this.html;
 
-apiAddArticle(params).then((res)=>{
-  console.log(res);
-  
-})
+      apiAddArticle(params).then(res => {
+        if (res.isSuccess) {
+          this.$message({
+            type: "success",
+            message: res.message
+          });
+          setTimeout(() => {
+            this.$router.replace("/Home/AcrticleList");
+          }, 1500);
+        } else {
+          this.$message({
+            type: "error",
+            message: res.message
+          });
+        }
+      });
     },
     handleAvatarSuccess() {},
     beforeAvatarUpload() {},
@@ -185,7 +196,7 @@ apiAddArticle(params).then((res)=>{
         .post("api/index/uploadImage", params, config)
         .then(res => {
           if (res.data.code === 1) {
-            this.imgUrl =  res.data.path;
+            this.imgUrl = res.data.path;
             this.$message.success("上传成功");
           } else {
             this.$message.error(res.data.retmsg);
@@ -212,6 +223,8 @@ apiAddArticle(params).then((res)=>{
         let _res = res.data;
         // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)
         this.$refs.md.$img2Url(pos, _res.path);
+        console.log( this.$refs.md);
+        
       });
     },
     $imgDel(pos) {
