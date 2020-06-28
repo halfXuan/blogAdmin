@@ -89,7 +89,7 @@ export default {
     },
     publish(item) {
       const { _id } = item;
-      apiModifyArticle({ _id, isTop: 1 }).then(res => {
+      apiModifyArticle({ _id, isPublish: 1 }).then(res => {
         if (res.isSuccess) {
           this.$message({
             type: "success",
@@ -105,10 +105,38 @@ export default {
       });
     },
     setTop(item) {
-      console.log(item);
+       const { _id } = item;
+      apiModifyArticle({ _id, isTop: 1 }).then(res => {
+        if (res.isSuccess) {
+          this.$message({
+            type: "success",
+            message: res.message
+          });
+          this.onload();
+        } else {
+          this.$message({
+            type: "warning",
+            message: res.message
+          });
+        }
+      });
     },
     deleteLabel(item) {
-      console.log(item);
+      const { _id } = item;
+      apiModifyArticle({ _id, isPublish: 0 }).then(res => {
+        if (res.isSuccess) {
+          this.$message({
+            type: "success",
+            message: res.message
+          });
+          this.onload();
+        } else {
+          this.$message({
+            type: "warning",
+            message: res.message
+          });
+        }
+      });
     },
     modify(item) {
       console.log(item);
