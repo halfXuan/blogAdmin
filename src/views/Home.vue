@@ -29,9 +29,9 @@
             <i class="el-icon-document"></i>
             <span slot="title">评论管理</span>
           </el-menu-item>
-          <el-menu-item index="/Home/Label">
+          <el-menu-item index="/Home/Links">
             <i class="el-icon-setting"></i>
-            <span slot="title">导航四</span>
+            <span slot="title">热门链接</span>
           </el-menu-item>
           <el-submenu index="5">
             <template slot="title">

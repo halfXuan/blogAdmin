@@ -45,6 +45,13 @@ const routes = [{
                     import ( /* webpackChunkName: "about" */ '../views/Comment.vue')
             },
             {
+                path: '/Home/Links',
+                name: 'Links',
+                meta: { title: '热门链接' },
+                component: () =>
+                    import ( /* webpackChunkName: "about" */ '../views/Links.vue')
+            },
+            {
                 path: '/Home/AddAcrticle',
                 name: 'AddAcrticle',
                 component: () =>
