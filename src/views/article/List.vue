@@ -30,12 +30,12 @@
       </el-table-column>
       <el-table-column align="center" prop="imgUrl" label="配图">
         <template slot-scope="scope">
-          <img :src="scope.row.imgUrl" alt />
+          <img :src="scope.row.imgUrl" alt style="width:120px;height:80px" />
         </template>
       </el-table-column>
       <el-table-column align="center" prop="content" label="内容">
         <template slot-scope="scope">
-          <span>{{scope.row.content}}</span>
+          <span>{{scope.row.content.substring(0,10)}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" prop="createDate" label="编写日期">
@@ -64,7 +64,7 @@
   </div>
 </template>
 <script>
-import { apiQueryArticle, apiModifyArticle } from "@/api/article";
+import { apiQueryArticle, apiModifyArticle, apiDeleteArticle } from "@/api/article";
 export default {
   data() {
     return {
@@ -105,7 +105,7 @@ export default {
       });
     },
     setTop(item) {
-       const { _id } = item;
+      const { _id } = item;
       apiModifyArticle({ _id, isTop: 1 }).then(res => {
         if (res.isSuccess) {
           this.$message({
@@ -122,21 +122,34 @@ export default {
       });
     },
     deleteLabel(item) {
-      const { _id } = item;
-      apiModifyArticle({ _id, isPublish: 0 }).then(res => {
-        if (res.isSuccess) {
-          this.$message({
-            type: "success",
-            message: res.message
+      this.$confirm("文章删除将不可恢复, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          const { _id } = item;
+          apiDeleteArticle({ _id}).then(res => {
+            if (res.isSuccess) {
+              this.$message({
+                type: "success",
+                message: res.message
+              });
+              this.onload();
+            } else {
+              this.$message({
+                type: "warning",
+                message: res.message
+              });
+            }
           });
-          this.onload();
-        } else {
+        })
+        .catch(() => {
           this.$message({
-            type: "warning",
-            message: res.message
+            type: "info",
+            message: "已取消删除"
           });
-        }
-      });
+        });
     },
     modify(item) {
       console.log(item);

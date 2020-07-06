@@ -11,7 +11,10 @@
         <span class="artItemTitle">文章标题：</span>
         <el-Input v-model="name"></el-Input>
       </el-col>
-
+      <el-col :span="24" class="artItem">
+        <span class="artItemTitle">文章简介：</span>
+        <el-Input v-model="note"></el-Input>
+      </el-col>
       <el-col :span="16">
         <el-col :span="24" class="artItem">
           <span class="artItemTitle">标签：</span>
@@ -82,6 +85,7 @@ export default {
     return {
       labelList: [],
       name: "",
+      note:'',
       labels: [],
       isAuthor: 1,
       isTop: 0,
@@ -154,6 +158,7 @@ export default {
         });
         return false;
       }
+      params.note = this.note
       params.isAuthor = this.isAuthor;
       params.isTop = this.isTop;
       params.isPublish = this.isPublish;
