@@ -5,6 +5,8 @@
  * @LastEditTime: 2020-06-08 16:22:43
  */
 module.exports = {
+    publicPath: './',
+    productionSourceMap: false,
     devServer: {
         proxy: {
             '/api': {
